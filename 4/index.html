@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eventora | Event Management & Analytics</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Sora:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- LOGIN PAGE -->
+
+    <section id="loginPage" class="login-page">
+
+        <div class="login-left">
+
+            <nav class="brand">
+                <div class="brand-icon">E</div>
+                <span>Eventora</span>
+            </nav>
+
+            <div class="login-content">
+
+                <p class="eyebrow">YOUR CAMPUS. YOUR MOMENTS.</p>
+
+                <h1>
+                    Every event<br>
+                    creates a <span>story.</span>
+                </h1>
+
+                <p class="login-description">
+                    Discover campus events, connect with people,
+                    and make every college moment count.
+                </p>
+
+                <div class="login-highlights">
+                    <div>
+                        <strong>01</strong>
+                        <span>Discover Events</span>
+                    </div>
+
+                    <div>
+                        <strong>02</strong>
+                        <span>Manage Registrations</span>
+                    </div>
+
+                    <div>
+                        <strong>03</strong>
+                        <span>Explore Analytics</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="login-footer">
+                © 2026 Eventora. Built for campus communities.
+            </p>
+
+        </div>
+
+
+        <div class="login-right">
+
+            <div class="login-card">
+
+                <div class="mobile-brand brand">
+                    <div class="brand-icon">E</div>
+                    <span>Eventora</span>
+                </div>
+
+                <p class="eyebrow">WELCOME TO EVENTORA</p>
+
+                <h2>Let's get you started.</h2>
+
+                <p class="muted">
+                    Sign in to explore your campus events.
+                </p>
+
+                <div class="role-selector">
+
+                    <button class="role-btn active"
+                            type="button"
+                            data-role="student">
+                        Student
+                    </button>
+
+                    <button class="role-btn"
+                            type="button"
+                            data-role="admin">
+                        Admin
+                    </button>
+
+                </div>
+
+                <form id="loginForm">
+
+                    <input type="hidden"
+                           id="selectedRole"
+                           value="student">
+
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="username"
+                        required
+                    >
+
+                    <label for="password">Password</label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle">
+                            Show
+                        </button>
+
+                    </div>
+
+                    <p id="loginMessage" class="form-message"></p>
+
+                    <button type="submit" class="primary-btn">
+                        Sign In <span>→</span>
+                    </button>
+
+                </form>
+
+                <p class="login-note">
+                    Secure access for students and administrators.
+                </p>
+
+                <p class="demo-note">
+                    Demo credentials are provided in the JavaScript file.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- APPLICATION -->
+
+    <div id="app" class="app hidden">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="brand sidebar-brand">
+                <div class="brand-icon">E</div>
+                <span>Eventora</span>
+            </div>
+
+            <div class="workspace-label">WORKSPACE</div>
+
+            <nav id="sidebarNav">
+
+                <button class="nav-link active"
+                        data-page="dashboard">
+                    <span>▦</span> Dashboard
+                </button>
+
+                <button class="nav-link"
+                        data-page="events">
+                    <span>◇</span> Explore Events
+                </button>
+
+                <button class="nav-link student-only"
+                        data-page="registrations">
+                    <span>▤</span> My Registrations
+                </button>
+
+                <button class="nav-link admin-only"
+                        data-page="participants">
+                    <span>♧</span> Participants
+                </button>
+
+                <button class="nav-link admin-only"
+                        data-page="attendance">
+                    <span>✓</span> Attendance
+                </button>
+
+                <button class="nav-link"
+                        data-page="announcements">
+                    <span>◉</span> Announcements
+                </button>
+
+                <button class="nav-link admin-only"
+                        data-page="analytics">
+                    <span>▥</span> Analytics
+                </button>
+
+                <button class="nav-link student-only"
+                        data-page="feedback">
+                    <span>☆</span> Feedback
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-help">
+                    <span>✦</span>
+                    <strong>Make every moment count.</strong>
+                    <p>Your campus experience starts here.</p>
+                </div>
+
+                <button id="logoutBtn" class="logout-btn">
+                    <span>↪</span> Sign Out
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <header class="topbar">
+
+                <div>
+                    <p class="breadcrumb">EVENTORA / <span id="breadcrumbPage">DASHBOARD</span></p>
+                    <h2 id="pageHeading">Dashboard</h2>
+                </div>
+
+                <div class="profile-area">
+
+                    <div class="profile-text">
+                        <strong id="profileName">Student</strong>
+                        <span id="profileRole">Student Account</span>
+                    </div>
+
+                    <div id="profileAvatar" class="avatar">S</div>
+
+                </div>
+
+            </header>
+
+
+            <div class="page-container">
+
+                <!-- DASHBOARD -->
+
+                <section id="dashboardSection" class="page-section">
+
+                    <div class="welcome-banner">
+
+                        <div>
+                            <p class="banner-label">YOUR EVENT SPACE</p>
+
+                            <h1 id="welcomeHeading">
+                                Welcome to Eventora!
+                            </h1>
+
+                            <p id="welcomeDescription">
+                                Discover experiences that bring your campus to life.
+                            </p>
+
+                            <div style="display: flex; gap: 12px; margin-top: 23px; flex-wrap: wrap;">
+                                <button class="light-btn"
+                                        data-goto="events"
+                                        style="margin-top: 0;">
+                                    Explore Events →
+                                </button>
+
+                                <button id="createStudentBtn"
+                                        class="light-btn admin-only"
+                                        type="button"
+                                        style="margin-top: 0;">
+                                    + Create Student ID
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="banner-art">
+                            <div class="art-circle circle-one"></div>
+                            <div class="art-circle circle-two"></div>
+                            <div class="art-card">
+                                <span>✦</span>
+                                <strong>Make it memorable.</strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+                            <div class="stat-icon purple-icon">◇</div>
+                            <p>Total Events</p>
+                            <h3 id="totalEvents">0</h3>
+                            <span>Campus experiences</span>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon blue-icon">♧</div>
+                            <p>Total Registrations</p>
+                            <h3 id="totalRegistrations">0</h3>
+                            <span>Event participation</span>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon green-icon">✓</div>
+                            <p>Attendance Rate</p>
+                            <h3 id="attendanceRate">0%</h3>
+                            <span>Attendance overview</span>
+                        </article>
+
+                        <article class="stat-card">
+                            <div class="stat-icon orange-icon">☆</div>
+                            <p>Average Rating</p>
+                            <h3 id="averageRating">0.0</h3>
+                            <span>Student feedback</span>
+                        </article>
+
+                    </div>
+
+
+                    <div class="content-grid">
+
+                        <section class="panel events-panel">
+
+                            <div class="panel-heading">
+                                <div>
+                                    <h3>Upcoming Events</h3>
+                                    <p>What's happening on campus?</p>
+                                </div>
+
+                                <button class="text-btn"
+                                        data-goto="events">
+                                    View All →
+                                </button>
+                            </div>
+
+                            <div id="dashboardEvents" class="event-list"></div>
+
+                        </section>
+
+
+                        <section class="panel">
+
+                            <div class="panel-heading">
+                                <div>
+                                    <h3>Quick Overview</h3>
+                                    <p>Your event activity</p>
+                                </div>
+                            </div>
+
+                            <canvas id="dashboardChart"></canvas>
+
+                        </section>
+
+                    </div>
+
+                </section>
+
+
+                <!-- EVENTS -->
+
+                <section id="eventsSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">CAMPUS HAPPENINGS</p>
+                            <h2>Discover Events</h2>
+                            <p>Find your next campus experience.</p>
+                        </div>
+
+                        <button id="createEventBtn"
+                                class="primary-btn admin-only">
+                            + Create Event
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+
+                        <input id="eventSearch"
+                               type="search"
+                               placeholder="Search events...">
+
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Cultural">Cultural</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Other">Other</option>
+                        </select>
+
+                    </div>
+
+                    <div id="eventsGrid" class="events-grid"></div>
+
+                </section>
+
+
+                <!-- MY REGISTRATIONS -->
+
+                <section id="registrationsSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">YOUR EVENT JOURNEY</p>
+                            <h2>My Registrations</h2>
+                            <p>Keep track of the events you've joined.</p>
+                        </div>
+                    </div>
+
+                    <div id="registrationsList" class="events-grid"></div>
+
+                </section>
+
+
+                <!-- PARTICIPANTS -->
+
+                <section id="participantsSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">EVENT MANAGEMENT</p>
+                            <h2>Participants</h2>
+                            <p>View registered students and their events.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel table-panel">
+                        <div class="table-scroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Email</th>
+                                        <th>Event</th>
+                                        <th>Registration Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="participantsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- ATTENDANCE -->
+
+                <section id="attendanceSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">PARTICIPATION TRACKING</p>
+                            <h2>Attendance Management</h2>
+                            <p>Mark attendance for registered participants.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel table-panel">
+
+                        <div class="table-scroll">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Email</th>
+                                        <th>Event</th>
+                                        <th>Attendance</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="attendanceTable"></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ANNOUNCEMENTS -->
+
+                <section id="announcementsSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">CAMPUS UPDATES</p>
+                            <h2>Announcements</h2>
+                            <p>Stay informed about upcoming activities.</p>
+                        </div>
+
+                        <button id="createAnnouncementBtn"
+                                class="primary-btn admin-only">
+                            + New Announcement
+                        </button>
+                    </div>
+
+                    <div id="announcementsList" class="announcement-list"></div>
+
+                </section>
+
+
+                <!-- ANALYTICS -->
+
+                <section id="analyticsSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">DATA INSIGHTS</p>
+                            <h2>Event Analytics</h2>
+                            <p>Understand participation and event performance.</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+
+                        <article class="stat-card">
+                            <p>Total Events</p>
+                            <h3 id="analyticsEvents">0</h3>
+                        </article>
+
+                        <article class="stat-card">
+                            <p>Registrations</p>
+                            <h3 id="analyticsRegistrations">0</h3>
+                        </article>
+
+                        <article class="stat-card">
+                            <p>Attendance</p>
+                            <h3 id="analyticsAttendance">0%</h3>
+                        </article>
+
+                        <article class="stat-card">
+                            <p>Feedback Rating</p>
+                            <h3 id="analyticsRating">0.0</h3>
+                        </article>
+
+                    </div>
+
+                    <div class="content-grid">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <h3>Event Popularity</h3>
+                                    <p>Registrations by event</p>
+                                </div>
+                            </div>
+
+                            <canvas id="popularityChart"></canvas>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <div>
+                                    <h3>Event Categories</h3>
+                                    <p>Distribution of campus events</p>
+                                </div>
+                            </div>
+
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- FEEDBACK -->
+
+                <section id="feedbackSection"
+                         class="page-section hidden">
+
+                    <div class="section-intro">
+                        <div>
+                            <p class="eyebrow">SHARE YOUR EXPERIENCE</p>
+                            <h2>Event Feedback</h2>
+                            <p>Help us make future events better.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel feedback-panel">
+
+                        <form id="feedbackForm">
+
+                            <label for="feedbackEvent">Select Event</label>
+
+                            <select id="feedbackEvent" required></select>
+
+                            <label>Rate Your Experience</label>
+
+                            <div class="rating-selector">
+                                <input type="radio" name="rating" value="5" id="rate5" required>
+                                <label for="rate5">★</label>
+
+                                <input type="radio" name="rating" value="4" id="rate4">
+                                <label for="rate4">★</label>
+
+                                <input type="radio" name="rating" value="3" id="rate3">
+                                <label for="rate3">★</label>
+
+                                <input type="radio" name="rating" value="2" id="rate2">
+                                <label for="rate2">★</label>
+
+                                <input type="radio" name="rating" value="1" id="rate1">
+                                <label for="rate1">★</label>
+                            </div>
+
+                            <label for="feedbackComment">Your Feedback</label>
+
+                            <textarea id="feedbackComment"
+                                      rows="5"
+                                      placeholder="Tell us about your experience..."
+                                      required></textarea>
+
+                            <button type="submit" class="primary-btn">
+                                Submit Feedback →
+                            </button>
+
+                            <p id="feedbackMessage" class="form-message"></p>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- CREATE / EDIT EVENT MODAL -->
+
+    <div id="eventModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <p class="eyebrow">EVENT MANAGEMENT</p>
+                    <h2 id="eventModalTitle">Create Event</h2>
+                </div>
+
+                <button class="close-modal" data-close="eventModal">×</button>
+            </div>
+
+            <form id="eventForm">
+
+                <input type="hidden" id="editEventId">
+
+                <label for="eventTitle">Event Name</label>
+                <input id="eventTitle" required placeholder="Enter event name">
+
+                <label for="eventCategory">Category</label>
+                <select id="eventCategory" required>
+                    <option value="Technical">Technical</option>
+                    <option value="Cultural">Cultural</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <div class="form-row">
+
+                    <div>
+                        <label for="eventDate">Date</label>
+                        <input id="eventDate" type="date" required>
+                    </div>
+
+                    <div>
+                        <label for="eventTime">Time</label>
+                        <input id="eventTime" type="time" required>
+                    </div>
+
+                </div>
+
+                <label for="eventVenue">Venue</label>
+                <input id="eventVenue" required placeholder="Event venue">
+
+                <label for="eventCapacity">Maximum Participants</label>
+                <input id="eventCapacity" type="number" min="1" value="100" required>
+
+                <label for="eventDescription">Description</label>
+                <textarea id="eventDescription"
+                          rows="4"
+                          required
+                          placeholder="Describe the event..."></textarea>
+
+                <button type="submit" class="primary-btn">
+                    Save Event →
+                </button>
+
+                <p id="eventFormMessage" class="form-message"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ANNOUNCEMENT MODAL -->
+
+    <div id="announcementModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <p class="eyebrow">CAMPUS UPDATES</p>
+                    <h2>New Announcement</h2>
+                </div>
+
+                <button class="close-modal"
+                        data-close="announcementModal">×</button>
+            </div>
+
+            <form id="announcementForm">
+
+                <label for="announcementTitle">Title</label>
+                <input id="announcementTitle" required>
+
+                <label for="announcementText">Message</label>
+                <textarea id="announcementText"
+                          rows="5"
+                          required></textarea>
+
+                <button class="primary-btn" type="submit">
+                    Publish Announcement →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- CREATE STUDENT ID MODAL -->
+
+    <div id="studentModal" class="modal hidden">
+
+        <div class="modal-card">
+
+            <div class="modal-heading">
+                <div>
+                    <p class="eyebrow">ADMINISTRATION</p>
+                    <h2>Create Student ID</h2>
+                </div>
+
+                <button class="close-modal" data-close="studentModal">×</button>
+            </div>
+
+            <form id="studentForm">
+
+                <label for="studentName">Student Full Name</label>
+                <input id="studentName" required placeholder="e.g. Alex Johnson">
+
+                <label for="studentEmail">College Email</label>
+                <input id="studentEmail" type="email" required placeholder="e.g. alex.johnson@college.edu">
+
+                <div class="form-row">
+
+                    <div>
+                        <label for="studentEnrollment">Enrollment Number</label>
+                        <input id="studentEnrollment" required placeholder="e.g. ENR2026CS101">
+                    </div>
+
+                    <div>
+                        <label for="studentAcademicYear">Academic Year</label>
+                        <select id="studentAcademicYear" required>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <label for="studentDepartment">Department / Branch</label>
+                <select id="studentDepartment" required>
+                    <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                    <option value="Information Technology">Information Technology</option>
+                    <option value="Electronics & Communication">Electronics & Communication</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Electrical Engineering">Electrical Engineering</option>
+                    <option value="Business Administration">Business Administration</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="studentInitialPassword">Initial Password (Optional)</label>
+                <input id="studentInitialPassword" type="text" placeholder="Leave blank for default: Student@123">
+
+                <button type="submit" class="primary-btn">
+                    Create Student Account →
+                </button>
+
+                <p id="studentFormMessage" class="form-message"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
