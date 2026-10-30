@@ -27,5 +27,6 @@ target/
 
 ### Secrets & Environment ###
 .env
-.env.local
+.env.*
+!.env.example
 *.log
